@@ -9,6 +9,7 @@ from app.api.v1.notes import router as notes_router
 from app.api.v1.qa import router as qa_router
 from app.api.v1.questions import router as questions_router
 from app.api.v1.exams import router as exams_router
+from app.api.v1.upload import router as upload_router
 
 api_router = APIRouter()
 
@@ -21,3 +22,4 @@ api_router.include_router(notes_router, prefix="", tags=["笔记管理"])
 api_router.include_router(qa_router, prefix="", tags=["问答管理"])
 api_router.include_router(questions_router, prefix="", tags=["题库管理"])
 api_router.include_router(exams_router, prefix="", tags=["考试管理"])
+api_router.include_router(upload_router, prefix="", tags=["文件上传"])

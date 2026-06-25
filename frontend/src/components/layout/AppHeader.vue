@@ -12,7 +12,12 @@
       <!-- Navigation -->
       <nav class="header-nav">
         <router-link to="/" class="nav-item">首页</router-link>
-        <router-link to="/" class="nav-item">课程</router-link>
+        <router-link to="/courses" class="nav-item">课程</router-link>
+        <router-link
+          v-if="userStore.isTeacher || userStore.isAdmin"
+          to="/manage/courses"
+          class="nav-item"
+        >课程管理</router-link>
       </nav>
 
       <!-- User Area -->
@@ -63,7 +68,7 @@ function handleCommand(command) {
   } else if (command === 'profile') {
     router.push('/')
   } else if (command === 'myCourses') {
-    router.push('/')
+    router.push('/courses')
   }
 }
 </script>

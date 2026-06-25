@@ -20,6 +20,30 @@ const routes = [
     component: () => import('@/views/Register.vue'),
     meta: { title: '注册', guestOnly: true },
   },
+  {
+    path: '/courses',
+    name: 'CourseList',
+    component: () => import('@/views/CourseList.vue'),
+    meta: { title: '所有课程' },
+  },
+  {
+    path: '/courses/:id',
+    name: 'CourseDetail',
+    component: () => import('@/views/CourseDetail.vue'),
+    meta: { title: '课程详情' },
+  },
+  {
+    path: '/courses/:id/learn/:chapterId',
+    name: 'VideoLearn',
+    component: () => import('@/views/VideoLearn.vue'),
+    meta: { title: '视频学习', requireAuth: true },
+  },
+  {
+    path: '/manage/courses',
+    name: 'CourseManage',
+    component: () => import('@/views/CourseManage.vue'),
+    meta: { title: '课程管理', requireAuth: true, roles: ['teacher', 'admin'] },
+  },
 ]
 
 const router = createRouter({
@@ -36,9 +60,22 @@ router.beforeEach((to, from, next) => {
 
   const userStore = useUserStore()
 
-  // 仅游客可访问的页面（登录/注册）— 已登录则跳转首页
+  // 仅游客可访问 — 已登录则跳转首页
   if (to.meta.guestOnly && userStore.isLoggedIn) {
     return next({ name: 'Home' })
+  }
+
+  // 需要登录
+  if (to.meta.requireAuth && !userStore.isLoggedIn) {
+    return next({ name: 'Login', query: { redirect: to.fullPath } })
+  }
+
+  // 角色权限检查
+  if (to.meta.roles && to.meta.roles.length) {
+    const userRole = userStore.userInfo?.role
+    if (!to.meta.roles.includes(userRole)) {
+      return next({ name: 'Home' })
+    }
   }
 
   next()

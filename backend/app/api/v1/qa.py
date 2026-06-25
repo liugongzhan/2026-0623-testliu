@@ -11,6 +11,6 @@ def list_qa(chapter_id: int):
 
 
 @router.post("/chapters/{chapter_id}/qa")
-def create_question(chapter_id: int):
+def create_qa_question(chapter_id: int):
     """提问"""
     return {"message": f"在章节 {chapter_id} 提问 API — 待实现"}

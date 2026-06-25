@@ -7,11 +7,11 @@ from app.database import Base
 class Chapter(Base):
     __tablename__ = "chapter"
 
-    id = Column(BigInteger, primary_key=True, autoincrement=True)
-    course_id = Column(BigInteger, ForeignKey("course.id", ondelete="CASCADE"), nullable=False, index=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    course_id = Column(Integer, ForeignKey("course.id", ondelete="CASCADE"), nullable=False, index=True)
     title = Column(String(200), nullable=False)
     sort_order = Column(Integer, nullable=False, default=0)
-    parent_id = Column(BigInteger, ForeignKey("chapter.id", ondelete="SET NULL"), default=None)
+    parent_id = Column(Integer, ForeignKey("chapter.id", ondelete="SET NULL"), default=None)
     video_url = Column(String(500), default=None)
     duration = Column(Integer, default=0)
     is_free = Column(Boolean, nullable=False, default=False)

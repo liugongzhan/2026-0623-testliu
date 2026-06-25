@@ -131,7 +131,7 @@ mysql -u root -p < backend/sql/init.sql
 ```bash
 cd backend
 python -m app.main
-# 服务运行在 http://localhost:8000
+# 服务运行在 http://localhost:8090
 ```
 
 ### 3. 启动前端
@@ -147,15 +147,15 @@ npm run dev
 
 ```bash
 # 健康检查
-curl http://localhost:8000/
+curl http://localhost:8090/
 
 # 注册用户
-curl -X POST http://localhost:8000/api/v1/auth/register \
+curl -X POST http://localhost:8090/api/v1/auth/register \
   -H "Content-Type: application/json" \
   -d '{"username":"test","password":"123456"}'
 
 # 登录
-curl -X POST http://localhost:8000/api/v1/auth/login/json \
+curl -X POST http://localhost:8090/api/v1/auth/login/json \
   -H "Content-Type: application/json" \
   -d '{"username":"test","password":"123456"}'
 ```

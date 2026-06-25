@@ -7,8 +7,8 @@ from app.database import Base
 class Exam(Base):
     __tablename__ = "exam"
 
-    id = Column(BigInteger, primary_key=True, autoincrement=True)
-    course_id = Column(BigInteger, ForeignKey("course.id", ondelete="CASCADE"), nullable=False, index=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    course_id = Column(Integer, ForeignKey("course.id", ondelete="CASCADE"), nullable=False, index=True)
     title = Column(String(200), nullable=False)
     duration = Column(Integer, nullable=False, default=60)
     total_score = Column(DECIMAL(5, 1), nullable=False, default=100.0)

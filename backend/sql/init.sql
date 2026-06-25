@@ -13,7 +13,7 @@ USE edu_platform;
 -- 1. 用户表
 -- ---------------------------------------------
 CREATE TABLE IF NOT EXISTS sys_user (
-    id          BIGINT          AUTO_INCREMENT PRIMARY KEY,
+    id          INT AUTO_INCREMENT PRIMARY KEY,
     username    VARCHAR(50)     NOT NULL UNIQUE COMMENT '用户名',
     password    VARCHAR(255)    NOT NULL COMMENT '密码(加密)',
     nickname    VARCHAR(100)    DEFAULT NULL COMMENT '昵称',
@@ -31,12 +31,12 @@ CREATE TABLE IF NOT EXISTS sys_user (
 -- 2. 课程表
 -- ---------------------------------------------
 CREATE TABLE IF NOT EXISTS course (
-    id              BIGINT          AUTO_INCREMENT PRIMARY KEY,
+    id              INT AUTO_INCREMENT PRIMARY KEY,
     title           VARCHAR(200)    NOT NULL COMMENT '课程名称',
     description     TEXT            DEFAULT NULL COMMENT '课程描述',
     cover_image     VARCHAR(500)    DEFAULT NULL COMMENT '封面图片URL',
-    category_id     BIGINT          DEFAULT NULL COMMENT '分类ID',
-    teacher_id      BIGINT          NOT NULL COMMENT '讲师ID',
+    category_id     INT DEFAULT NULL COMMENT '分类ID',
+    teacher_id      INT NOT NULL COMMENT '讲师ID',
     price           DECIMAL(10,2)   NOT NULL DEFAULT 0.00 COMMENT '价格',
     status          VARCHAR(20)     NOT NULL DEFAULT 'draft' COMMENT '状态: draft/published/archived',
     student_count   INT             NOT NULL DEFAULT 0 COMMENT '学习人数',
@@ -53,11 +53,11 @@ CREATE TABLE IF NOT EXISTS course (
 -- 3. 章节表
 -- ---------------------------------------------
 CREATE TABLE IF NOT EXISTS chapter (
-    id          BIGINT          AUTO_INCREMENT PRIMARY KEY,
-    course_id   BIGINT          NOT NULL COMMENT '所属课程ID',
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    course_id   INT NOT NULL COMMENT '所属课程ID',
     title       VARCHAR(200)    NOT NULL COMMENT '章节标题',
     sort_order  INT             NOT NULL DEFAULT 0 COMMENT '排序',
-    parent_id   BIGINT          DEFAULT NULL COMMENT '父章节ID(支持二级结构)',
+    parent_id   INT DEFAULT NULL COMMENT '父章节ID(支持二级结构)',
     video_url   VARCHAR(500)    DEFAULT NULL COMMENT '视频URL',
     duration    INT             DEFAULT 0 COMMENT '视频时长(秒)',
     is_free     TINYINT(1)      NOT NULL DEFAULT 0 COMMENT '是否免费: 0=否 1=是',
@@ -72,10 +72,10 @@ CREATE TABLE IF NOT EXISTS chapter (
 -- 4. 学习记录表
 -- ---------------------------------------------
 CREATE TABLE IF NOT EXISTS learning_record (
-    id              BIGINT      AUTO_INCREMENT PRIMARY KEY,
-    user_id         BIGINT      NOT NULL COMMENT '用户ID',
-    course_id       BIGINT      NOT NULL COMMENT '课程ID',
-    chapter_id      BIGINT      NOT NULL COMMENT '章节ID',
+    id              INT AUTO_INCREMENT PRIMARY KEY,
+    user_id         INT NOT NULL COMMENT '用户ID',
+    course_id       INT NOT NULL COMMENT '课程ID',
+    chapter_id      INT NOT NULL COMMENT '章节ID',
     progress        FLOAT       NOT NULL DEFAULT 0 COMMENT '学习进度(0-100)',
     last_position   FLOAT       NOT NULL DEFAULT 0 COMMENT '上次播放位置(秒)',
     completed       TINYINT(1)  NOT NULL DEFAULT 0 COMMENT '是否完成: 0=否 1=是',
@@ -91,9 +91,9 @@ CREATE TABLE IF NOT EXISTS learning_record (
 -- 5. 笔记表
 -- ---------------------------------------------
 CREATE TABLE IF NOT EXISTS note (
-    id          BIGINT      AUTO_INCREMENT PRIMARY KEY,
-    user_id     BIGINT      NOT NULL COMMENT '用户ID',
-    chapter_id  BIGINT      NOT NULL COMMENT '章节ID',
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    user_id     INT NOT NULL COMMENT '用户ID',
+    chapter_id  INT NOT NULL COMMENT '章节ID',
     content     TEXT        NOT NULL COMMENT '笔记内容',
     timestamp   INT         DEFAULT NULL COMMENT '视频时间点(秒)',
     created_at  DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -106,9 +106,9 @@ CREATE TABLE IF NOT EXISTS note (
 -- 6. 问答表
 -- ---------------------------------------------
 CREATE TABLE IF NOT EXISTS qa (
-    id          BIGINT      AUTO_INCREMENT PRIMARY KEY,
-    user_id     BIGINT      NOT NULL COMMENT '提问用户ID',
-    chapter_id  BIGINT      NOT NULL COMMENT '所属章节ID',
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    user_id     INT NOT NULL COMMENT '提问用户ID',
+    chapter_id  INT NOT NULL COMMENT '所属章节ID',
     question    TEXT        NOT NULL COMMENT '问题内容',
     answer      TEXT        DEFAULT NULL COMMENT '回答内容',
     created_at  DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -122,8 +122,8 @@ CREATE TABLE IF NOT EXISTS qa (
 -- 7. 题库表
 -- ---------------------------------------------
 CREATE TABLE IF NOT EXISTS question (
-    id          BIGINT          AUTO_INCREMENT PRIMARY KEY,
-    course_id   BIGINT          NOT NULL COMMENT '所属课程ID',
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    course_id   INT NOT NULL COMMENT '所属课程ID',
     type        VARCHAR(20)     NOT NULL COMMENT '题型: single/multi/judge/fill',
     content     TEXT            NOT NULL COMMENT '题目内容',
     options     JSON            DEFAULT NULL COMMENT '选项(单选/多选题使用)',
@@ -139,8 +139,8 @@ CREATE TABLE IF NOT EXISTS question (
 -- 8. 考试表
 -- ---------------------------------------------
 CREATE TABLE IF NOT EXISTS exam (
-    id              BIGINT          AUTO_INCREMENT PRIMARY KEY,
-    course_id       BIGINT          NOT NULL COMMENT '所属课程ID',
+    id              INT AUTO_INCREMENT PRIMARY KEY,
+    course_id       INT NOT NULL COMMENT '所属课程ID',
     title           VARCHAR(200)    NOT NULL COMMENT '考试名称',
     duration        INT             NOT NULL DEFAULT 60 COMMENT '考试时长(分钟)',
     total_score     DECIMAL(5,1)    NOT NULL DEFAULT 100.0 COMMENT '总分',
@@ -157,9 +157,9 @@ CREATE TABLE IF NOT EXISTS exam (
 -- 9. 考试记录表
 -- ---------------------------------------------
 CREATE TABLE IF NOT EXISTS exam_record (
-    id          BIGINT          AUTO_INCREMENT PRIMARY KEY,
-    exam_id     BIGINT          NOT NULL COMMENT '考试ID',
-    user_id     BIGINT          NOT NULL COMMENT '用户ID',
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    exam_id     INT NOT NULL COMMENT '考试ID',
+    user_id     INT NOT NULL COMMENT '用户ID',
     score       DECIMAL(5,1)    DEFAULT NULL COMMENT '得分',
     answers     JSON            DEFAULT NULL COMMENT '用户答案(JSON格式)',
     start_time  DATETIME        NOT NULL COMMENT '开始答题时间',
