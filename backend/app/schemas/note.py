@@ -5,7 +5,6 @@ from pydantic import BaseModel, ConfigDict
 
 
 class NoteCreate(BaseModel):
-    chapter_id: int
     content: str
     timestamp: Optional[int] = None
 

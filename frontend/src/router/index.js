@@ -34,8 +34,8 @@ const routes = [
   },
   {
     path: '/courses/:id/learn/:chapterId',
-    name: 'VideoLearn',
-    component: () => import('@/views/VideoLearn.vue'),
+    name: 'Player',
+    component: () => import('@/views/course/Player.vue'),
     meta: { title: '视频学习', requireAuth: true },
   },
   {
